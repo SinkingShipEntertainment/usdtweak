@@ -1,6 +1,12 @@
 cmake_minimum_required (VERSION 3.14)
 project(usdtweak)
 set(CMAKE_CXX_STANDARD 14)
+
+# NOTE: Since USD and MaterialX provide XXXCmake.config files, we only need to
+# provide the xxx_DIR location for find_package(xxx)
+set(pxr_DIR "$ENV{REZ_USD_ROOT}/cmake")
+set(MaterialX_DIR "$ENV{REZ_MATERIALX_ROOT}/lib/cmake/MaterialX")
+
 find_package(OpenGL REQUIRED)
 find_package(pxr REQUIRED)
 if (${PXR_VERSION} VERSION_GREATER_EQUAL "2208")
@@ -81,3 +87,8 @@ get_target_property(USDTWEAK_SOURCES usdtweak SOURCES)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/src"
     PREFIX "src"
     FILES ${USDTWEAK_SOURCES})
+
+
+install(TARGETS usdtweak
+    DESTINATION ./bin
+)
